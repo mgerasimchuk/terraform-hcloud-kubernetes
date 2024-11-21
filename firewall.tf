@@ -94,6 +94,7 @@ data "http" "current_ipv6" {
 
 resource "hcloud_firewall" "this" {
   name = var.cluster_name
+  count = var.firewall_use_current_ipv4 || var.firewall_use_current_ipv6 ? 1 : 0
 
   dynamic "rule" {
     for_each = local.firewall_rules_list

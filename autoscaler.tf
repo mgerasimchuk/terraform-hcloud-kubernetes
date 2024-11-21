@@ -53,7 +53,7 @@ data "helm_template" "cluster_autoscaler" {
   }
   set {
     name  = "extraEnv.HCLOUD_FIREWALL"
-    value = hcloud_firewall.this.id
+    value = hcloud_firewall.this[0].id
   }
   set {
     name  = "extraEnv.HCLOUD_SSH_KEY"

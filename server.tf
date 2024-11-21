@@ -35,9 +35,7 @@ resource "hcloud_server" "control_plane" {
     "role"    = "control-plane"
   }, each.value.labels)
 
-  firewall_ids = [
-    hcloud_firewall.this.id
-  ]
+  firewall_ids = length(hcloud_firewall.this) > 0 ? [hcloud_firewall.this[0].id] : null
 
   public_net {
     ipv4_enabled = var.talos_public_ipv4_enabled
@@ -98,9 +96,7 @@ resource "hcloud_server" "worker" {
     "role"    = "worker"
   }, each.value.labels)
 
-  firewall_ids = [
-    hcloud_firewall.this.id
-  ]
+  firewall_ids = length(hcloud_firewall.this) > 0 ? [hcloud_firewall.this[0].id] : null
 
   public_net {
     ipv4_enabled = var.talos_public_ipv4_enabled

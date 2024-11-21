@@ -196,6 +196,12 @@ variable "control_plane_private_vip_ipv4_enabled" {
   description = "If true, an alias IP will be created and assigned to the Control Plane nodes."
 }
 
+variable "control_plane_cluster_api_server_admission_control_enabled" {
+  type        = bool
+  default     = true
+  description = "If true, the default Talos admission control configuration will be applied."
+}
+
 variable "control_plane_nodepools" {
   type = list(object({
     name        = string

@@ -469,7 +469,16 @@ data "talos_machine_configuration" "control_plane" {
   kubernetes_version = var.kubernetes_version
   machine_type       = "controlplane"
   machine_secrets    = talos_machine_secrets.this.machine_secrets
-  config_patches     = [yamlencode(local.control_plane_talos_config_patch[each.key])]
+  config_patches     = [
+    yamlencode(local.control_plane_talos_config_patch[each.key]),
+    yamlencode(var.control_plane_cluster_api_server_admission_control_enabled ? [] : [
+      {
+        op = "replace"
+        path = "/cluster/apiServer/admissionControl"
+        value: []
+      }
+    ])
+  ]
   docs               = false
   examples           = false
 }
